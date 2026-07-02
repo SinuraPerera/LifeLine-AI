@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile containing crucial emergency contacts, medical records, and preferred language",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "The unique Firebase Auth User ID"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Full name of the user"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the user"
+        },
+        "emergencyPhone": {
+          "type": "string",
+          "description": "Primary emergency contact telephone number"
+        },
+        "bloodGroup": {
+          "type": "string",
+          "description": "Blood group of the user (e.g., O+, A-, etc.)"
+        },
+        "medicalConditions": {
+          "type": "string",
+          "description": "Known medical conditions, drug allergies, or current medications"
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "description": "User's UI language preference (en, si, or ta)"
+        }
+      },
+      "required": [
+        "uid",
+        "displayName",
+        "email"
+      ]
+    },
+    "EmergencyAlert": {
+      "title": "EmergencyAlert",
+      "description": "Crucial logs of emergency SOS button presses and incident details with GPS tracking",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique record identifier"
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the UserProfile who triggered the SOS, or 'anonymous'"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The server or device timestamp when the alarm was triggered"
+        },
+        "type": {
+          "type": "string",
+          "description": "Category of emergency (e.g., Panic, Accident, Medical, Fire, Poisoning)"
+        },
+        "latitude": {
+          "type": "number",
+          "description": "GPS latitude coordinate"
+        },
+        "longitude": {
+          "type": "number",
+          "description": "GPS longitude coordinate"
+        },
+        "accuracy": {
+          "type": "number",
+          "description": "GPS location precision radius in meters"
+        },
+        "description": {
+          "type": "string",
+          "description": "Short summary of the emergency context"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "active",
+            "resolved",
+            "dispatched"
+          ],
+          "description": "Current tracking status of the rescue response"
+        },
+        "triageLevel": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ],
+          "description": "AI-calculated emergency severity index"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "timestamp",
+        "type",
+        "latitude",
+        "longitude",
+        "status",
+        "triageLevel"
+      ]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Publicly editable but privately read-restricted profile data containing emergency contact and language configurations."
+    },
+    "alerts/{alertId}": {
+      "schema": "EmergencyAlert",
+      "description": "Global dispatch alerts list created during SOS triggers, readable by emergency team responders."
+    }
+  }
+}

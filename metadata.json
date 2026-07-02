@@ -1,0 +1,12 @@
+{
+  "name": "LifeLine AI",
+  "description": "A production-ready emergency response assistant with AI triage, offline first-aid guides, image-based hazard detection, localized GPS rescue tools, and Sinhalese, Tamil, and English translation support. Developed and maintained by SVD Group.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
